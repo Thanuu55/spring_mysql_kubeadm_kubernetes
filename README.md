@@ -251,5 +251,11 @@ kubeadm token create --print-join-command
 Aspiring Java Full Stack Developer & DevOps Engineer
 
 ---
+<img width="1920" height="813" alt="Screenshot (117)" src="https://github.com/user-attachments/assets/66824c35-e7b6-4be1-849e-64a1e321c538" />
+<img width="1920" height="951" alt="Screenshot (116)" src="https://github.com/user-attachments/assets/c15298ee-65bd-47e3-9537-c2d37af9e09e" />
+<img width="1920" height="970" alt="Screenshot (118)" src="https://github.com/user-attachments/assets/c6599ad6-8b8e-472e-89d5-a37315448a28" />
+
+
+
 
 
