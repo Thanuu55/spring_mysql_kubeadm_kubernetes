@@ -50,3 +50,206 @@ sudo systemctl reload nginx
 ```
 ---
 
+
+
+
+---
+
+# 🚀 Spring Boot + MySQL Deployment using Kubernetes (kubeadm)
+
+## 📌 Overview
+
+This project demonstrates deployment of a **Spring Boot application with MySQL** using:
+
+* Docker (Containerization)
+* Kubernetes (kubeadm cluster)
+* Multi-node setup (Master + Worker)
+* Docker Hub (Image registry)
+
+---
+
+## 🧱 Architecture
+
+```
+Master Node (Control Plane)
+        ↓
+Worker Node (Runs Pods)
+        ↓
+Docker Server (Build & Push Images)
+```
+
+---
+
+## ⚙️ Prerequisites
+
+* Ubuntu/Linux (3 systems recommended)
+* Minimum:
+
+  * 2 CPU
+  * 4–8 GB RAM
+* Docker Hub Account
+* Internet connectivity
+
+---
+
+## 🖥️ Master Node Setup
+
+```bash
+apt update
+
+# Install Kubernetes Master
+curl -sL https://tinyurl.com/mt346aen | bash
+
+# Install dependencies
+apt install openjdk-17-jre-headless -y
+apt install maven -y
+
+# Clone repository
+git clone https://github.com/sakit333/spring_mysql_kubeadm_sakcoorg.git
+cd spring_mysql_kubeadm_sakcoorg
+
+# Edit scripts if required
+vi docker_build_push.sh
+vi k8s-deploy.sh   # ensure ./kubescripts path is correct
+
+# Deploy application
+bash k8s-deploy.sh
+```
+
+---
+
+## 👷 Worker Node Setup
+
+```bash
+apt update
+
+# Install Kubernetes Worker
+curl -sL https://tinyurl.com/yvmvxmzb | bash
+
+# Join cluster (update if token changes)
+sudo kubeadm join 172.31.40.37:6443 \
+--token v96oir.ifksg4mot37dclz9 \
+--discovery-token-ca-cert-hash sha256:eef265a455bcbb05369a52e2754393fac139e9dbb948150b1e2e4aa0e9e2946a
+```
+
+Verify:
+
+```bash
+kubectl get nodes
+```
+
+---
+
+## 🐳 Docker Server Setup
+
+```bash
+apt update
+
+# Install Docker
+apt install docker.io -y
+docker --version
+
+# Install Java & Maven
+apt install openjdk-17-jre-headless -y
+apt install maven -y
+
+# Clone project
+git clone https://github.com/sakit333/spring_mysql_kubeadm_sakcoorg.git
+cd spring_mysql_kubeadm_sakcoorg
+
+# Build Docker image
+docker build -t spring_mysql_kubeadm .
+
+# Login to Docker Hub
+docker login -u thanushrii
+
+# Tag image
+docker tag spring_mysql_kubeadm thanushrii/spring_mysql_kubeadm
+
+# Push image
+docker push thanushrii/spring_mysql_kubeadm
+```
+
+---
+
+## 📦 Kubernetes Deployment
+
+Ensure your deployment YAML uses:
+
+```yaml
+image: thanushrii/spring_mysql_kubeadm
+```
+
+Apply configurations:
+
+```bash
+kubectl apply -f kubescripts/
+```
+
+---
+
+## 🔍 Verification Commands
+
+```bash
+kubectl get nodes
+kubectl get pods
+kubectl get deployments
+kubectl get services
+```
+
+---
+
+## 🌐 Access Application
+
+```bash
+kubectl get svc
+```
+
+Then open:
+
+```
+http://<NODE-IP>:<PORT>
+```
+
+---
+
+## ⚠️ Troubleshooting
+
+### Pod Issues
+
+```bash
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+```
+
+### ImagePullBackOff
+
+* Check Docker image name
+* Ensure image is pushed
+* Verify Docker Hub login
+
+### Worker Node Join Failed
+
+```bash
+kubeadm token create --print-join-command
+```
+
+---
+
+## 📚 Tech Stack
+
+* Java (Spring Boot)
+* MySQL
+* Docker
+* Kubernetes (kubeadm)
+
+---
+
+## 👨‍💻 Author
+
+**Thanu**
+Aspiring Java Full Stack Developer & DevOps Engineer
+
+---
+
+
