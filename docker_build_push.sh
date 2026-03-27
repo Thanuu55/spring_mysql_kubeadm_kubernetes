@@ -2,8 +2,8 @@
 
 set -e
 
-IMAGE_NAME="sakit333/spring-kube-sakgroup"
-DOCKER_USER="sakit333"
+IMAGE_NAME="thanushrii/spring-kube-kubernetes"
+DOCKER_USER="thanushrii"
 
 echo "🔍 Checking Docker..."
 
